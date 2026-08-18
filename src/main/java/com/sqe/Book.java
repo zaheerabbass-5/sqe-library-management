@@ -15,6 +15,9 @@ public class Book {
     }
 
     public void addRating(double rating) {
+        if (rating < 0) {
+            throw new IllegalArgumentException("Rating score cannot be negative.");
+        }
         this.ratings.add(rating);
     }
 }
