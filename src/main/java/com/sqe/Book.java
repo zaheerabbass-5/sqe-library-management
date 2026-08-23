@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a library book with rating management.
  */
 public class Book {
-    private String bookName;
+    private String bookTitle;
     private String author;
     private List<Double> ratings;
 
