@@ -69,3 +69,45 @@ db755ef fix(book): resolve title field merge conflict
 The conflict was successfully resolved locally and the updated branch was
 pushed to GitHub. The pull request then showed that there were no conflicts
 with the base branch.
+
+## Task 4 — Commit Hygiene Audit
+
+### Last 10 Commits
+
+The following output was obtained using:
+git log --oneline -10
+57432a9 (HEAD -> main, origin/main, origin/HEAD) docs(workflow): document merge conflict resolution
+57e7b38 docs(workflow): document merge conflict resolution
+db755ef (origin/feature/rename-field-b, feature/rename-field-b) fix(book): resolve title field merge conflict
+f6e029e Merge pull request #6 from zaheerabbass-5/feature/rename-field-a
+791e8eb refactor(book): rename title to bookName
+9d94bf6 (origin/feature/rename-field-a) refactor(book): rename title to bookTitle
+de85663 Merge pull request #5 from zaheerabbass-5/feature/add-member-management
+d99d2f5 (origin/feature/add-member-management) Merge branch 'main' into feature/add-member-management
+67c7843 fix(member): improve member validation and naming
+ec9c118 feat(member): add Member class
+### Weak Commit Messages and Suggested Rewrites
+
+#### 1. Original
+
+`Merge branch 'main' into feature/add-member-management`
+
+Suggested rewrite:
+
+`chore(member): sync feature branch with main`
+
+Why it is better: The original message describes the Git operation rather than its purpose. The rewritten message follows the Conventional Commits format and clearly describes the purpose.
+
+#### 2. Original
+
+`Merge pull request #5 from zaheerabbass-5/feature/add-member-management`
+
+Suggested rewrite:
+
+`feat(member): merge member management implementation`
+
+Why it is better: The original message is automatically generated and does not clearly describe the functionality being integrated. The rewritten message uses the Conventional Commits format and explains the purpose.
+
+### Note
+
+These are suggested improvements only. The existing Git history was not rewritten and no force-push was performed.
