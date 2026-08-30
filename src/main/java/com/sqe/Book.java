@@ -1,19 +1,31 @@
 package com.sqe;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
- * Represents a library book with rating and availability management.
+ * Represents a library book with rating, ID, and quantity management.
  */
 public class Book {
 
+    private String bookId;
     private String bookTitle;
     private String author;
-    private int availableQuantity;
+    private int quantity;
     private List<Double> ratings;
 
-    public Book(String title, String author, int availableQuantity) {
+    private static Set<String> bookIds = new HashSet<>();
+
+    /**
+     * Creates a book with ID, title, author, and quantity.
+     */
+    public Book(String bookId, String title, String author, int quantity) {
+
+        if (bookIds.contains(bookId)) {
+            throw new IllegalArgumentException("Book ID already exists.");
+        }
 
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Book title cannot be empty");
@@ -23,41 +35,79 @@ public class Book {
             throw new IllegalArgumentException("Author cannot be empty");
         }
 
-        if (availableQuantity < 0) {
-            throw new IllegalArgumentException("Available quantity cannot be negative");
+        if (quantity < 0) {
+            throw new IllegalArgumentException(
+                "Book quantity cannot be negative."
+            );
         }
 
+        this.bookId = bookId;
         this.bookTitle = title;
         this.author = author;
-        this.availableQuantity = availableQuantity;
+        this.quantity = quantity;
         this.ratings = new ArrayList<>();
+
+        bookIds.add(bookId);
     }
 
+    /**
+     * Creates a book with ID, title, and author.
+     * Quantity defaults to 0.
+     */
+    public Book(String bookId, String title, String author) {
+        this(bookId, title, author, 0);
+    }
+
+    /**
+     * Returns the book ID.
+     */
+    public String getBookId() {
+        return bookId;
+    }
+
+    /**
+     * Returns the book title.
+     */
     public String getBookTitle() {
         return bookTitle;
     }
 
+    /**
+     * Returns the author.
+     */
     public String getAuthor() {
         return author;
     }
 
-    public int getAvailableQuantity() {
-        return availableQuantity;
+    /**
+     * Returns the current available quantity.
+     */
+    public int getQuantity() {
+        return quantity;
     }
 
     /**
-     * Adds a rating score to the book.
-     *
-     * @param rating Numerical rating score
-     * @throws IllegalArgumentException if rating is negative
+     * Returns the current available quantity.
      */
-    public void addRating(double rating) {
+    public int getAvailableQuantity() {
+        return quantity;
+    }
 
-        if (rating < 0) {
-            throw new IllegalArgumentException("Rating score cannot be negative.");
+    /**
+     * Updates the book quantity.
+     *
+     * @param quantity new quantity
+     * @throws IllegalArgumentException if quantity is negative
+     */
+    public void setQuantity(int quantity) {
+
+        if (quantity < 0) {
+            throw new IllegalArgumentException(
+                "Book quantity cannot be negative."
+            );
         }
 
-        this.ratings.add(rating);
+        this.quantity = quantity;
     }
 
     /**
@@ -67,10 +117,27 @@ public class Book {
      */
     public void borrowBook() {
 
-        if (availableQuantity <= 0) {
+        if (quantity <= 0) {
             throw new IllegalStateException("No copies are available.");
         }
 
-        availableQuantity--;
+        quantity--;
+    }
+
+    /**
+     * Adds a rating score to the book.
+     *
+     * @param rating numerical rating score
+     * @throws IllegalArgumentException if rating is negative
+     */
+    public void addRating(double rating) {
+
+        if (rating < 0) {
+            throw new IllegalArgumentException(
+                "Rating score cannot be negative."
+            );
+        }
+
+        this.ratings.add(rating);
     }
 }
