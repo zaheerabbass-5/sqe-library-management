@@ -27,6 +27,14 @@ public class Book {
             throw new IllegalArgumentException("Book ID already exists.");
         }
 
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Book title cannot be empty");
+        }
+
+        if (author == null || author.trim().isEmpty()) {
+            throw new IllegalArgumentException("Author cannot be empty");
+        }
+
         if (quantity < 0) {
             throw new IllegalArgumentException(
                 "Book quantity cannot be negative."
@@ -51,9 +59,37 @@ public class Book {
     }
 
     /**
-     * Returns the current available quantity of the book.
+     * Returns the book ID.
+     */
+    public String getBookId() {
+        return bookId;
+    }
+
+    /**
+     * Returns the book title.
+     */
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    /**
+     * Returns the author.
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+    /**
+     * Returns the current available quantity.
      */
     public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * Returns the current available quantity.
+     */
+    public int getAvailableQuantity() {
         return quantity;
     }
 
@@ -75,9 +111,23 @@ public class Book {
     }
 
     /**
+     * Decreases the available quantity when a book is borrowed.
+     *
+     * @throws IllegalStateException if no copies are available
+     */
+    public void borrowBook() {
+
+        if (quantity <= 0) {
+            throw new IllegalStateException("No copies are available.");
+        }
+
+        quantity--;
+    }
+
+    /**
      * Adds a rating score to the book.
      *
-     * @param rating Numerical rating score
+     * @param rating numerical rating score
      * @throws IllegalArgumentException if rating is negative
      */
     public void addRating(double rating) {
