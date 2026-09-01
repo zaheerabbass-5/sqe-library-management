@@ -2,27 +2,54 @@
 
 ## Library Management System
 
-The following test cases cover the required Library Management System functionality. Test cases that depend on functionality not currently implemented in the Java codebase are marked as Blocked during manual execution.
+The following 12 test cases cover the scenarios required by Lab 4. The test cases are based on the current implementation of the Library Management System. Where the required functionality is not present in the current Java codebase, the test is marked as **BLOCKED**.
 
-| ID     | Title                                          | Requirement | Preconditions                                                            | Steps                                                                                                                                                          | Expected                                                                                             | Priority | Type                               | Result  | Notes                                                                   | Issue |
-| ------ | ---------------------------------------------- | ----------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------- | ---------------------------------- | ------- | ----------------------------------------------------------------------- | ----- |
-| TC-001 | Add book with valid new ID                     | REQ-01      | Java project is available                                                | 1. Create a `Book` using a unique ID, valid title, author, and positive quantity. 2. Call `getBookId()`, `getBookTitle()`, `getAuthor()`, and `getQuantity()`. | Book is created successfully and all supplied values are stored correctly.                           | High     | Positive / Functional              | TBD     | To be executed                                                          | —     |
-| TC-002 | Reject duplicate book ID                       | REQ-02      | A book with the selected ID already exists                               | 1. Create a book with a unique ID. 2. Attempt to create another book using the same ID.                                                                        | `IllegalArgumentException` is raised with the duplicate ID error and the second book is not created. | High     | Negative / Functional              | TBD     | To be executed                                                          | —     |
-| TC-003 | Reject malformed ISBN                          | REQ-03      | Current implementation does not contain an ISBN field or ISBN validation | 1. Attempt to create a book using an invalid ISBN value as required by the original lab specification.                                                         | The system should reject a malformed ISBN.                                                           | High     | Negative / Functional              | BLOCKED | ISBN validation is not implemented; the current system uses `bookId`.   | —     |
-| TC-004 | Borrow book when copies are available          | REQ-05      | Book has at least one available copy and member exists                   | 1. Create a book with quantity 2. 2. Create a member. 3. Call `member.borrowBook(book)`. 4. Check available quantity.                                          | Borrowing succeeds and available quantity decreases from 2 to 1.                                     | High     | Positive / Functional              | TBD     | To be executed                                                          | —     |
-| TC-005 | Prevent borrowing when no copies are available | REQ-06      | Book quantity is 0 and member exists                                     | 1. Create a book with quantity 0. 2. Create a member. 3. Call `member.borrowBook(book)`.                                                                       | `IllegalStateException` is raised with `No copies are available.` and quantity remains 0.            | Critical | Negative / Functional / Regression | TBD     | Regression test for Issue #9                                            | —     |
-| TC-006 | Return book currently on loan                  | REQ-07      | A member has borrowed a book                                             | 1. Borrow a book using the member. 2. Attempt to return the book using the system's return operation.                                                          | The book is successfully returned and available quantity is restored.                                | High     | Positive / Functional              | BLOCKED | `returnBook()` is not implemented in the current codebase.              | —     |
-| TC-007 | Prevent return of book not borrowed by member  | REQ-07      | A book exists but was not borrowed by the selected member                | 1. Select a member who has not borrowed the book. 2. Attempt to return the book.                                                                               | The system rejects the invalid return operation.                                                     | High     | Negative / Functional              | BLOCKED | Return functionality and borrowing records are not implemented.         | —     |
-| TC-008 | Member borrows at allowed limit                | REQ-08      | A borrowing limit is defined                                             | 1. Borrow books until the member reaches the allowed borrowing limit. 2. Attempt no additional borrowing beyond the limit.                                     | All permitted books are borrowed successfully up to the defined limit.                               | High     | Positive / Functional              | BLOCKED | No member borrowing limit is implemented in the current `Member` class. | —     |
-| TC-009 | Member borrows beyond allowed limit            | REQ-08      | A borrowing limit is defined and member is already at the limit          | 1. Borrow books until the limit is reached. 2. Attempt to borrow one additional book.                                                                          | The system rejects the additional borrowing operation.                                               | High     | Negative / Functional              | BLOCKED | No member borrowing limit is implemented.                               | —     |
-| TC-010 | Fine calculation for zero days overdue         | REQ-08      | Fine calculation rules are defined                                       | 1. Set overdue period to zero days. 2. Calculate the fine.                                                                                                     | Fine is calculated according to the implemented rules for zero overdue days.                         | Medium   | Positive / Functional              | BLOCKED | Fine calculation is not implemented in the current codebase.            | —     |
-| TC-011 | Fine calculation for mid-range overdue period  | REQ-08      | Fine calculation rules are defined                                       | 1. Use an overdue period in the middle of an applicable fine tier. 2. Calculate the fine.                                                                      | Fine matches the applicable fine tier.                                                               | Medium   | Positive / Functional              | BLOCKED | Fine calculation is not implemented.                                    | —     |
-| TC-012 | Fine calculation at overdue-tier boundary      | REQ-08      | Fine tiers are defined                                                   | 1. Use the exact boundary value between two fine tiers. 2. Calculate the fine.                                                                                 | The boundary value is assigned to the correct fine tier according to the requirements.               | High     | Boundary / Functional              | BLOCKED | Fine tiers and calculation are not implemented.                         | —     |
+| ID | Title | Requirement | Preconditions | Steps | Expected | Priority | Type | Result | Notes | Issue |
+|---|---|---|---|---|---|---|---|---|---|---|
+| TC-001 | Add book with valid new ISBN | REQ-01 | ISBN-based book creation is supported | Enter valid ISBN, title, author and quantity, then add the book. | Book is added successfully. | High | Positive / Functional | BLOCKED | ISBN is not implemented. | — |
+| TC-002 | Reject duplicate ISBN | REQ-02 | A book with the ISBN already exists | Attempt to add another book with the same ISBN. | Duplicate ISBN is rejected. | High | Negative / Functional | BLOCKED | ISBN is not implemented. | — |
+| TC-003 | Reject malformed ISBN | REQ-03 | ISBN validation is available | Enter a malformed ISBN and attempt to add the book. | Malformed ISBN is rejected. | High | Negative / Functional | BLOCKED | ISBN validation is not implemented. | — |
+| TC-004 | Borrow book when copies are available | REQ-05 | Book has available copies and member exists | Create a book with quantity 2, create a member, borrow the book and check quantity. | Borrow succeeds and quantity becomes 1. | High | Positive / Functional | PASS | Manually executed successfully. | — |
+| TC-005 | Borrow book when no copies are available | REQ-06 | Book quantity is 0 and member exists | Create a book with quantity 0 and attempt to borrow it. | `IllegalStateException` is raised and quantity remains 0. | Critical | Negative / Functional / Regression | PASS | Manually executed successfully. Verifies Issue #9. | — |
+| TC-006 | Return book currently on loan | REQ-07 | Member has borrowed the book | Borrow a book and attempt to return it. | Book is returned and quantity is restored. | High | Positive / Functional | BLOCKED | `returnBook()` is not implemented. | — |
+| TC-007 | Reject return of book not on loan by member | REQ-07 | Member has not borrowed the book | Attempt to return a book not borrowed by the member. | Invalid return is rejected. | High | Negative / Functional | BLOCKED | Return and loan records are not implemented. | — |
+| TC-008 | Member borrowing at allowed limit | REQ-08 | A borrowing limit is defined | Borrow books until the allowed limit is reached. | Member can borrow up to the limit. | High | Positive / Functional | BLOCKED | Borrowing limit is not implemented. | — |
+| TC-009 | Member borrowing beyond allowed limit | REQ-08 | Member has reached the limit | Attempt to borrow one more book. | Additional borrowing is rejected. | High | Negative / Functional | BLOCKED | Borrowing limit is not implemented. | — |
+| TC-010 | Fine calculation for zero days overdue | REQ-08 | Fine rules are available | Set overdue period to 0 days and calculate fine. | Correct fine is calculated. | Medium | Positive / Functional | BLOCKED | Fine calculation is not implemented. | — |
+| TC-011 | Fine calculation for mid-range overdue | REQ-08 | Fine tiers are available | Use an overdue period in a middle tier and calculate fine. | Correct tier fine is calculated. | Medium | Positive / Functional | BLOCKED | Fine calculation is not implemented. | — |
+| TC-012 | Fine calculation at overdue-tier boundary | REQ-08 | Fine tiers are available | Use the exact boundary between two tiers and calculate fine. | Correct boundary rule is applied. | High | Boundary / Functional | BLOCKED | Fine calculation is not implemented. | — |
 
-## Test Execution Notes
+## Execution Summary
 
-`TBD` results will be replaced with `PASS`, `FAIL`, or `BLOCKED` during manual execution. A GitHub Issue will be linked in the Issue column for any confirmed failure. Blocked cases will include a note explaining which required functionality is missing from the current implementation.
+| Result | Count |
+|---|---:|
+| PASS | 2 |
+| FAIL | 0 |
+| BLOCKED | 10 |
+| Total | 12 |
 
-## Regression Coverage
+## Manual Execution Notes
 
-TC-005 is a regression test for the previously reported unavailable-book borrowing defect (Issue #9). It verifies that a member cannot borrow a book when the available quantity is zero and that the quantity does not become negative.
+TC-004 and TC-005 were manually executed against the current Java implementation and passed successfully.
+
+TC-005 provides regression coverage for Issue #9, which prevents users from borrowing a book when no copies are available.
+
+The remaining 10 test cases are BLOCKED because ISBN validation, book return functionality, member borrowing limits, and fine calculation are not implemented in the current codebase.
+
+## Existing Test Suite Finding
+
+The existing `tests/BookBorrowingTest.java` could not be compiled against the current `Book.java`.
+
+The test uses:
+
+`new Book("Java Programming", "James Gosling", 2)`
+
+but the current implementation requires:
+
+`Book(bookId, title, author, quantity)`
+
+The compiler produced:
+
+`incompatible types: int cannot be converted to String`
+
+This is a test-suite defect and should be tracked through a GitHub Issue.
