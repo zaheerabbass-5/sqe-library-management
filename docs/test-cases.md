@@ -53,3 +53,8 @@ The compiler produced:
 `incompatible types: int cannot be converted to String`
 
 This is a test-suite defect and should be tracked through a GitHub Issue.
+## Defect Tracking
+
+The test-suite compilation defect found during manual execution is tracked in GitHub Issue #18.
+
+Issue: #18 — fix(test): update BookBorrowingTest constructor arguments
