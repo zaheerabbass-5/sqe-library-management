@@ -1,10 +1,6 @@
 import com.sqe.Book;
 import com.sqe.Member;
 
-/**
- * Tests for Issue #9:
- * Prevent users from borrowing books when no copies are available.
- */
 public class BookBorrowingTest {
 
     public static void main(String[] args) {
@@ -16,13 +12,15 @@ public class BookBorrowingTest {
         System.out.println("All Issue #9 tests passed successfully.");
     }
 
-    /**
-     * Test 1:
-     * A book with available copies should be borrowed successfully.
-     */
     public static void testBorrowAvailableBook() {
 
-        Book book = new Book("Java Programming", "James Gosling", 2);
+        Book book = new Book(
+            "B201",
+            "Java Programming",
+            "James Gosling",
+            2
+        );
+
         Member member = new Member("Ali", "M001");
 
         member.borrowBook(book);
@@ -33,16 +31,20 @@ public class BookBorrowingTest {
             );
         }
 
-        System.out.println("Test 1 passed: Available book can be borrowed.");
+        System.out.println(
+            "Test 1 passed: Available book can be borrowed."
+        );
     }
 
-    /**
-     * Test 2:
-     * A book with zero available copies should not be borrowed.
-     */
     public static void testBorrowUnavailableBook() {
 
-        Book book = new Book("Java Programming", "James Gosling", 0);
+        Book book = new Book(
+            "B202",
+            "Java Programming",
+            "James Gosling",
+            0
+        );
+
         Member member = new Member("Ali", "M002");
 
         try {
@@ -67,13 +69,15 @@ public class BookBorrowingTest {
         }
     }
 
-    /**
-     * Test 3:
-     * The quantity must remain zero after a failed borrowing attempt.
-     */
     public static void testQuantityDoesNotGoBelowZero() {
 
-        Book book = new Book("Java Programming", "James Gosling", 0);
+        Book book = new Book(
+            "B203",
+            "Java Programming",
+            "James Gosling",
+            0
+        );
+
         Member member = new Member("Ali", "M003");
 
         try {
@@ -82,7 +86,6 @@ public class BookBorrowingTest {
 
         } catch (IllegalStateException e) {
 
-            // Expected exception.
         }
 
         if (book.getAvailableQuantity() != 0) {
