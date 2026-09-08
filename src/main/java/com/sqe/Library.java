@@ -26,4 +26,20 @@ public class Library {
 
         return "Severe";
     }
+
+    public static boolean validateIsbn(String isbn) {
+
+        if (isbn == null || isbn.length() != 13) {
+            return false;
+        }
+
+        for (int i = 0; i < isbn.length(); i++) {
+
+            if (!Character.isDigit(isbn.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
