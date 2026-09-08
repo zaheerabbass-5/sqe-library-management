@@ -1,12 +1,10 @@
 package com.sqe;
 
-/**
- * Represents a library member.
- */
 public class Member {
 
     private String name;
     private String memberId;
+    private int booksOnLoan;
 
     public Member(String name, String memberId) {
 
@@ -20,6 +18,7 @@ public class Member {
 
         this.name = name;
         this.memberId = memberId;
+        this.booksOnLoan = 0;
     }
 
     public String getName() {
@@ -30,18 +29,35 @@ public class Member {
         return memberId;
     }
 
-    /**
-     * Attempts to borrow a book.
-     *
-     * @param book the book to borrow
-     */
+    public int getBooksOnLoan() {
+        return booksOnLoan;
+    }
+
+    public void setBooksOnLoan(int booksOnLoan) {
+
+        if (booksOnLoan < 0) {
+            throw new IllegalArgumentException(
+                "Books on loan cannot be negative."
+            );
+        }
+
+        this.booksOnLoan = booksOnLoan;
+    }
+
     public void borrowBook(Book book) {
 
         if (book == null) {
             throw new IllegalArgumentException("Book cannot be null");
         }
 
+        if (booksOnLoan >= 5) {
+            throw new IllegalArgumentException(
+                "Member cannot have more than 5 books on loan."
+            );
+        }
+
         book.borrowBook();
+        booksOnLoan++;
 
         System.out.println(name + " borrowed " + book.getBookTitle());
     }
