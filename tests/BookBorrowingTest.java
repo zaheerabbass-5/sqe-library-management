@@ -14,7 +14,13 @@ public class BookBorrowingTest {
 
     public static void testBorrowAvailableBook() {
 
-        Book book = new Book("B201", "Java Programming", "James Gosling", 2);
+        Book book = new Book(
+            "B201",
+            "Java Programming",
+            "James Gosling",
+            2
+        );
+
         Member member = new Member("Ali", "M001");
 
         member.borrowBook(book);
@@ -25,12 +31,20 @@ public class BookBorrowingTest {
             );
         }
 
-        System.out.println("Test 1 passed: Available book can be borrowed.");
+        System.out.println(
+            "Test 1 passed: Available book can be borrowed."
+        );
     }
 
     public static void testBorrowUnavailableBook() {
 
-        Book book = new Book("B202", "Java Programming", "James Gosling", 0);
+        Book book = new Book(
+            "B202",
+            "Java Programming",
+            "James Gosling",
+            0
+        );
+
         Member member = new Member("Ali", "M002");
 
         try {
@@ -57,7 +71,13 @@ public class BookBorrowingTest {
 
     public static void testQuantityDoesNotGoBelowZero() {
 
-        Book book = new Book("B203", "Java Programming", "James Gosling", 0);
+        Book book = new Book(
+            "B203",
+            "Java Programming",
+            "James Gosling",
+            0
+        );
+
         Member member = new Member("Ali", "M003");
 
         try {
