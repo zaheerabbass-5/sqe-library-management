@@ -1,25 +1,31 @@
-# Boundary Value Analysis — fine_tier()
+# Lab 6 — Boundary Value Analysis
 
-## 1. Purpose
+## Task 1 — Enumerate All Boundaries
 
-Boundary Value Analysis (BVA) is used to test values at and around the boundaries of valid input ranges. It helps detect off-by-one errors and incorrect boundary conditions.
+### 1. fine_tier() Rules
 
-The `fine_tier()` function classifies overdue days into different fine tiers.
+The `fineTier()` function classifies the number of overdue days into different fine tiers.
 
-## 2. Equivalence Classes
+| Days Overdue | Expected Result |
+| ------------ | --------------- |
+| days < 0     | Invalid         |
+| 0            | None            |
+| 1–7          | Low             |
+| 8–14         | Medium          |
+| 15–30        | High            |
+| days >= 31   | Severe          |
 
-| Input Range | Expected Result |
-| ----------- | --------------- |
-| days < 0    | Invalid         |
-| days = 0    | None            |
-| 1–7         | Low             |
-| 8–14        | Medium          |
-| 15–30       | High            |
-| days >= 31  | Severe          |
+### 2. Boundary Values
 
-## 3. Boundary Values
+The important boundaries are:
 
-The important boundaries are 0, 1, 8, 15, and 31.
+* 0 — boundary between Invalid and None
+* 1 — boundary between None and Low
+* 8 — boundary between Low and Medium
+* 15 — boundary between Medium and High
+* 31 — boundary between High and Severe
+
+For each boundary, BVA tests the value immediately below the boundary, the boundary itself, and the value immediately above the boundary.
 
 | Boundary | Value - 1 | Expected | Boundary Value | Expected | Value + 1 | Expected |
 | -------- | --------: | -------- | -------------: | -------- | --------: | -------- |
@@ -29,25 +35,27 @@ The important boundaries are 0, 1, 8, 15, and 31.
 | 15       |        14 | Medium   |             15 | High     |        16 | High     |
 | 31       |        30 | High     |             31 | Severe   |        32 | Severe   |
 
-## 4. BVA Test Values
+### 3. BVA Test Values
 
-The complete boundary-focused values are:
+The boundary-focused test values are:
 
 ```text
 -1, 0, 1, 2, 7, 8, 9, 14, 15, 16, 30, 31, 32
 ```
 
-These values test the points immediately below, at, and immediately above each important boundary.
+The value `2` is included because it is immediately above the boundary at `1`.
 
-## 5. Expected Behavior
+### 4. Expected Behavior
 
-* Negative overdue days should be rejected as invalid.
-* 0 overdue days should return `None`.
-* 1–7 overdue days should return `Low`.
-* 8–14 overdue days should return `Medium`.
-* 15–30 overdue days should return `High`.
-* 31 or more overdue days should return `Severe`.
+* Negative days should be rejected.
+* 0 days should return `None`.
+* 1–7 days should return `Low`.
+* 8–14 days should return `Medium`.
+* 15–30 days should return `High`.
+* 31 or more days should return `Severe`.
 
-## 6. Conclusion
+### 5. Purpose of BVA
 
-BVA provides focused tests around the points where the behavior of `fine_tier()` changes. Testing values immediately below, at, and immediately above each boundary helps detect off-by-one defects.
+Equivalence Partitioning from Lab 5 tested representative values from each class. BVA complements EP by testing values around the boundaries where off-by-one errors are likely to occur.
+
+For example, the boundary between Medium and High is 15. Therefore, BVA tests 14, 15, and 16 to verify that the boundary is correctly implemented.
