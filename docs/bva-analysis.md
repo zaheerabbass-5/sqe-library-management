@@ -59,3 +59,28 @@ The value `2` is included because it is immediately above the boundary at `1`.
 Equivalence Partitioning from Lab 5 tested representative values from each class. BVA complements EP by testing values around the boundaries where off-by-one errors are likely to occur.
 
 For example, the boundary between Medium and High is 15. Therefore, BVA tests 14, 15, and 16 to verify that the boundary is correctly implemented.
+## Task 4 — ISBN Length Boundary Analysis
+
+### ISBN Validation Rule
+
+An ISBN is valid only when it contains exactly 13 numeric digits.
+
+### Boundary
+
+The valid boundary is 13 digits.
+
+| ISBN Length | Expected Result |
+|---:|---|
+| 11 digits | Invalid |
+| 12 digits | Invalid |
+| 13 digits | Valid |
+| 14 digits | Invalid |
+| 15 digits | Invalid |
+
+### BVA Result
+
+The boundary tests for 11, 12, 13, 14, and 15 digit ISBNs all passed.
+
+The 13-digit boundary was accepted correctly, while the values immediately below and above the boundary were rejected.
+
+No defect was found in the ISBN validation rule.
