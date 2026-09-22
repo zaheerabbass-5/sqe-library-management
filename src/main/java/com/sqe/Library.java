@@ -12,7 +12,8 @@ public class Library {
             return "None";
         }
 
-        if (daysOverdue <= 7) {
+        // BUG: 7 should be included in Low
+        if (daysOverdue < 7) {
             return "Low";
         }
 
